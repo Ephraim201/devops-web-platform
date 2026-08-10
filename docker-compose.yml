@@ -1,0 +1,9 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: devops-web-platform
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
