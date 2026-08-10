@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-web-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: devops-web-platform
+  template:
+    metadata:
+      labels:
+        app: devops-web-platform
+    spec:
+      containers:
+        - name: web
+          image: devops-web-platform:1.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          env:
+            - name: APP_MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: devops-web-platform-config
+                  key: APP_MESSAGE
