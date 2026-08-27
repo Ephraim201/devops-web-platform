@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: web
-          image: devops-web-platform:1.1
-          imagePullPolicy: IfNotPresent
+          image: zelgius/devops-web-platform:1.1
+          imagePullPolicy: Always
           ports:
             - containerPort: 5000
           env:
@@ -24,3 +24,9 @@ spec:
                 configMapKeyRef:
                   name: devops-web-platform-config
                   key: APP_MESSAGE
+
+            - name: APP_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: devops-web-platform-secret
+                  key: APP_SECRET_KEY
