@@ -5,6 +5,7 @@ metadata:
 spec:
   selector:
     app: devops-web-platform
+    version: blue
   ports:
     - protocol: TCP
       port: 5000

@@ -17,3 +17,8 @@ output "app_security_group_id" {
   description = "ID del Security Group de la aplicacion"
   value       = aws_security_group.app.id
 }
+
+output "github_actions_role_arn" {
+  description = "ARN del IAM Role utilizado por GitHub Actions"
+  value       = aws_iam_role.github_actions.arn
+}

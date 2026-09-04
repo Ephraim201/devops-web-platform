@@ -11,6 +11,7 @@ spec:
     metadata:
       labels:
         app: devops-web-platform
+        version: blue
     spec:
       containers:
         - name: web
