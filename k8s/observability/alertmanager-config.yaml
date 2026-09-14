@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: devops-web-platform-notifications
+  namespace: default
+  labels:
+    release: monitoring
+spec:
+  route:
+    receiver: devops-web-platform-webhook
+    matchers:
+      - name: alertname
+        matchType: "="
+        value: DevOpsWebPlatformDown
+
+  receivers:
+    - name: devops-web-platform-webhook
+      webhookConfigs:
+        - url: "http://alert-webhook.default.svc.cluster.local:8080/"

@@ -79,7 +79,7 @@ resource "aws_iam_role_policy" "github_actions" {
           "eks:DescribeCluster"
         ]
 
-        Resource = aws_eks_cluster.main.arn
+        Resource = module.eks.cluster_arn
       }
     ]
   })

@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: devops-web-platform-alerts
+  namespace: default
+  labels:
+    release: monitoring
+spec:
+  groups:
+    - name: devops-web-platform
+      rules:
+        - alert: DevOpsWebPlatformDown
+          expr: kube_deployment_status_replicas_available{deployment="devops-web-platform"} < 1
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "DevOps Web Platform no disponible"
+            description: "El Deployment devops-web-platform no tiene réplicas disponibles."
+            

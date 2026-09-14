@@ -1,0 +1,30 @@
+﻿{
+  "resourceSpans": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "devops-web-platform-test"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "spans": [
+            {
+              "traceId": "5B8AA5A2D2C777A6B5F5D5E6E7E8E9F0",
+              "spanId": "0123456789ABCDEF",
+              "name": "test-span",
+              "kind": 1,
+              "startTimeUnixNano": "1757590000000000000",
+              "endTimeUnixNano": "1757590001000000000"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

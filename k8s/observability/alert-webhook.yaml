@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alert-webhook-script
+  namespace: default
+data:
+  server.py: |
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_POST(self):
+            length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(length)
+
+            print("=== ALERTA RECIBIDA ===")
+            print(body.decode("utf-8"))
+
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"OK")
+
+        def log_message(self, format, *args):
+            return
+
+    server = HTTPServer(("0.0.0.0", 8080), Handler)
+    print("Webhook escuchando en puerto 8080")
+    server.serve_forever()
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alert-webhook
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alert-webhook
+  template:
+    metadata:
+      labels:
+        app: alert-webhook
+    spec:
+      containers:
+        - name: webhook
+          image: python:3.12-slim
+          command:
+            - python
+            - /app/server.py
+          volumeMounts:
+            - name: script
+              mountPath: /app
+          ports:
+            - containerPort: 8080
+      volumes:
+        - name: script
+          configMap:
+            name: alert-webhook-script
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alert-webhook
+  namespace: default
+spec:
+  selector:
+    app: alert-webhook
+  ports:
+    - port: 8080
+      targetPort: 8080

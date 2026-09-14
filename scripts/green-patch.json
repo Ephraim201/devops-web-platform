@@ -1,0 +1,8 @@
+{
+  "spec": {
+    "selector": {
+      "app": "devops-web-platform",
+      "version": "green"
+    }
+  }
+}
